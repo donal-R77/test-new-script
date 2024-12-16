@@ -39,7 +39,7 @@ jobs:
                  push: true
                  cache-from: type=gha
                  cache-to: type=gha,mode=max
-                 tags: ${{secrets.DOCKER_HUB_USERNAME}}/${{secrets.REPOSITORY}}:latest 
+                 tags: ${{secrets.DOCKER_HUB_USERNAME}}/${{secrets.REPOSITORY}}:test 
   
    deploy:
        name: Deploying to GCP 🚀
