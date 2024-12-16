@@ -64,8 +64,9 @@ jobs:
                shell: 'bash'
                run: |
                  cat <<EOF >> initial_script.sh 
-                 export DOCKER_HUB_USERNAME = ${{ secrets.DOCKER_HUB_USERNAME }}" 
-                 export DOCKER_HUB_TOKEN=${{ secrets.DOCKER_HUB_TOKEN }}"  
+                  export DOCKER_HUB_USERNAME=${{ secrets.DOCKER_HUB_USERNAME }}" 
+                  export DOCKER_HUB_TOKEN=${{ secrets.DOCKER_HUB_TOKEN }}" 
+                  . bash_test.sh 
                  EOF
              - name: Pushing Deploy scripts to GCP Storage bucket for Init scripts.
                shell: bash
