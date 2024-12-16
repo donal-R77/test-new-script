@@ -60,17 +60,24 @@ jobs:
              - name: 'Use gcloud CLI'
                run: 'gcloud info'
 
+             - name: Credentials
+               shell: bash
+               run: |
+                 echo "export DOCKER_HUB_USERNAME=${{ secrets.DOCKER_HUB_USERNAME }}" >> initial_script.sh
+                 echo "export DOCKER_HUB_TOKEN=${{ secrets.DOCKER_HUB_TOKEN }}" >> initial_script.sh  
+
              - name: Pushing Deploy scripts to GCP Storage bucket for Init scripts.
                shell: bash
                run: |
                  gcloud storage cp bash_test.sh gs://deploy-file/frontend-script
                  gcloud storage cp initial_script.sh gs://deploy-file/startup-script
+
+              
              
              - name: Creating new instance template for MIG.
                shell: bash
                run: |
-                 echo "export DOCKER_HUB_USERNAME=${{ secrets.DOCKER_HUB_USERNAME }}" >> initial_script.sh
-                 echo "export DOCKER_HUB_TOKEN=${{ secrets.DOCKER_HUB_TOKEN }}" >> initial_script.sh
+                
                  gcloud compute instance-templates create template-be-${{needs.build-image.outputs.git-current-commit}} \
                     --machine-type=e2-micro \
                     --metadata=startup-script-url=gs://deploy-file/startup-script/initial_script.sh, DOCKER_HUB_USERNAME=${{secrets.DOCKER_HUB_USERNAME}}  \
