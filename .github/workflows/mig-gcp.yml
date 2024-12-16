@@ -2,7 +2,7 @@ name: Continuous Integration
 
 on:
   push:
-    branches: ["main"]
+    branches: ["donal"]
 env:
    APPLICATION_NAME: flexbox  
 jobs:
@@ -27,8 +27,8 @@ jobs:
            - name: login to docker hub
              uses: docker/login-action@v2
              with:
-                 username: ${{secrets.DOCKERHUB_USERNAME}}
-                 password: ${{secrets.DOCKERHUB_PASSWORD}}
+                 username: ${{secrets.DOCKER_HUB_USERNAME}}
+                 password: ${{secrets.DOCKER_HUB_TOKEN}}
        
            - name: build the docker image
              uses: docker/build-push-action@v4
@@ -36,7 +36,7 @@ jobs:
                  context: .
                  file: ./Dockerfile
                  push: true
-                 tags: ${{secrets.DOCKERHUB_USERNAME}}/${{env.APPLICATION_NAME}}:flex 
+                 tags: ${{secrets.DOCKER_HUB_USERNAME}}/${{env.APPLICATION_NAME}}:flex 
   
    deploy:
        name: Deploying to GCP 🚀
@@ -47,13 +47,22 @@ jobs:
              - name: "Authentication for production"
                uses: "google-github-actions/auth@v1"
                with:
-                 credentials_json: "${{ secrets.GCP_SERVICE_ACCT }}" 
+                 credentials_json: "${{ secrets.GCP_SERVICE_ACCT_TOKEN }}" 
                 
              - name: 'Set up Cloud SDK'
                uses: 'google-github-actions/setup-gcloud@v2'
                with:
                  install_components: "beta"
 
+             - name: Set up environment
+               env:
+                # Retrieve secrets from GitHub Secrets
+                DOCKER_HUB_USERNAME: ${{ secrets.DOCKER_HUB_USERNAME }}
+                DOCKER_HUB_TOKEN: ${{ secrets.DOCKER_HUB_TOKEN }}
+               run: |
+                  # Use the secrets in your script
+                  echo "Deploying with credentials..."
+                  
              - name: 'Use gcloud CLI'
                run: 'gcloud info'
 
@@ -61,13 +70,14 @@ jobs:
                shell: bash
                run: |
                  gcloud storage cp bash_test.sh gs://deploy-file/frontend-script
+                 gcloud storage cp initial_script.sh gs://deploy-file/startup-script
              
              - name: Creating new instance template for MIG.
                shell: bash
                run: |
                  gcloud compute instance-templates create template-be-${{needs.build-image.outputs.git-current-commit}} \
                     --machine-type=e2-micro \
-                    --metadata=startup-script-url=gs://deploy-file/frontend-script/init-script.sh \
+                    --metadata=startup-script-url=gs://deploy-file/startup-script/initial_script.sh \
                     --create-disk=auto-delete=yes,boot=yes,device-name=instance-1,image=projects/debian-cloud/global/images/debian-12-bookworm-v20240709,mode=rw,size=10,type=pd-balanced \
                     --instance-template-region=us-central1 \
                     --region=us-central1 \

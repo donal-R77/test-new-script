@@ -5,7 +5,7 @@ CONTAINER_NAME="flex"
 IMAGE_NAME="maric77/flexbox:flex"
 
 #login to Docker Hub
-echo "${DOCKER_HUB_PASSWORD}" | docker login -u "${DOCKER_HUB_USERNAME}" foo --password-stdin
+echo "${DOCKER_HUB_TOKEN}" | docker login -u "${DOCKER_HUB_USERNAME}" --password-stdin
 
 #Pull image in DockerHub
 docker pull "${IMAGE_NAME}"
