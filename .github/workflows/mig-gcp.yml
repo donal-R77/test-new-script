@@ -36,7 +36,7 @@ jobs:
                  context: .
                  file: ./Dockerfile
                  push: true
-                 tags: ${{secrets.DOCKER_HUB_USERNAME}}/${{env.APPLICATION_NAME}}:flex 
+                 tags: ${{secrets.DOCKER_HUB_USERNAME}}/${{env.APPLICATION_NAME}}:latest 
   
    deploy:
        name: Deploying to GCP 🚀
@@ -53,15 +53,6 @@ jobs:
                uses: 'google-github-actions/setup-gcloud@v2'
                with:
                  install_components: "beta"
-
-            #  - name: 'Set up environment'
-            #    env:
-            #     # Retrieve secrets from GitHub Secrets
-            #     DOCKER_HUB_USERNAME: ${{ secrets.DOCKER_HUB_USERNAME }}
-            #     DOCKER_HUB_TOKEN: ${{ secrets.DOCKER_HUB_TOKEN }}
-            #    run: |
-            #       # Use the secrets in your script
-            #       echo "Deploying with credentials..."
 
              - name: 'Use gcloud CLI'
                run: 'gcloud info'
