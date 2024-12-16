@@ -62,7 +62,7 @@ jobs:
                run: |
                   # Use the secrets in your script
                   echo "Deploying with credentials..."
-                  
+
              - name: 'Use gcloud CLI'
                run: 'gcloud info'
 
@@ -81,7 +81,7 @@ jobs:
                     --create-disk=auto-delete=yes,boot=yes,device-name=instance-1,image=projects/debian-cloud/global/images/debian-12-bookworm-v20240709,mode=rw,size=10,type=pd-balanced \
                     --instance-template-region=us-central1 \
                     --region=us-central1 \
-                    --network-interface=network=front-refontetech-app-vpc,subnet=refontetech,no-address \
+                    --network-interface=network=default,no-address \
                     --tags=http,https \
                     --provisioning-model=SPOT \
                     --reservation-affinity=any \
