@@ -68,6 +68,7 @@ jobs:
                   export DOCKER_HUB_TOKEN='${{ secrets.DOCKER_HUB_TOKEN }}' 
                   . bash_test.sh 
                  EOF
+                 
              - name: Pushing Deploy scripts to GCP Storage bucket for Init scripts.
                shell: bash
                run: |

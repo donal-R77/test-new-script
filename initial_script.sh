@@ -18,4 +18,4 @@ sudo chown root:docker /var/run/docker.sock
 sudo chmod a+w /var/run/docker.sock
 gcloud storage cp gs://deploy-file/frontend-script/bash_test.sh .
 chmod a+x *.sh
-#add
+#add from github actions
