@@ -9,7 +9,7 @@ IMAGE_NAME="test"
 echo "${DOCKER_HUB_TOKEN}" | docker login -u "${DOCKER_HUB_USERNAME}" --password-stdin
 
 #Pull image in DockerHub
-docker pull "${IMAGE_NAME}"
+docker pull ${REPOSITORY}:${IMAGE_NAME}
     
 # check if container exists or not
 if [[ $(docker ps -qqa -f name="${CONTAINER_NAME}") ]] ; then 
