@@ -1,4 +1,4 @@
-FROM node:alpine
+FROM node:23-alpine3.20
 WORKDIR /app
 COPY . /app
 # COPY bash_test.sh /usr/local/bin/bash_test.sh
