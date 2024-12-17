@@ -113,11 +113,14 @@ jobs:
                               echo $New_VM
                 else echo "new server is not created"
                 fi
-                # This gcloud ssh command is to create docker containers for refontelearning frontend AI project  
-                gcloud compute ssh "$New_VM" --zone "us-central1-c" --tunnel-through-iap --project "primeval-mark-378114" --command="gcloud storage cp gs://deploy-file/frontend-script/bash_test.sh . && export DOCKER_HUB_USERNAME='${{secrets.DOCKER_HUB_USERNAME}}' && export DOCKER_HUB_TOKEN='${{secrets.DOCKER_HUB_TOKEN}}' && chmod a+x bash_test.sh && ./bash_test.sh "
+                # # This gcloud ssh command is to create docker containers for refontelearning frontend AI project  
+                # gcloud compute ssh "$New_VM" --zone "us-central1-c" --tunnel-through-iap --project "primeval-mark-378114" --command="gcloud storage cp gs://deploy-file/frontend-script/bash_test.sh . && export DOCKER_HUB_USERNAME='${{secrets.DOCKER_HUB_USERNAME}}' && export DOCKER_HUB_TOKEN='${{secrets.DOCKER_HUB_TOKEN}}' && chmod a+x bash_test.sh && ./bash_test.sh "
                
-                # This gcloud ssh command is to create docker containers for refontetech project
-                gcloud compute ssh "$New_VM" --zone "us-central1-c" --tunnel-through-iap --project "primeval-mark-378114" --command="gcloud storage cp gs://deploy-file/frontend-script/refontetech_test.sh . && export DOCKER_HUB_USERNAME='${{secrets.DOCKER_HUB_USERNAME}}' && export DOCKER_HUB_TOKEN='${{secrets.DOCKER_HUB_TOKEN}}' && chmod a+x refontetech_test.sh && ./refontetech_test.sh "
+                # # This gcloud ssh command is to create docker containers for refontetech project
+                # gcloud compute ssh "$New_VM" --zone "us-central1-c" --tunnel-through-iap --project "primeval-mark-378114" --command="gcloud storage cp gs://deploy-file/frontend-script/refontetech_test.sh . && export DOCKER_HUB_USERNAME='${{secrets.DOCKER_HUB_USERNAME}}' && export DOCKER_HUB_TOKEN='${{secrets.DOCKER_HUB_TOKEN}}' && chmod a+x refontetech_test.sh && ./refontetech_test.sh "
                 
-                # This gcloud ssh command is to create docker containers for refonte AI project
-                gcloud compute ssh "$New_VM" --zone "us-central1-c" --tunnel-through-iap --project "primeval-mark-378114" --command="gcloud storage cp gs://deploy-file/frontend-script/refonteai_test.sh . && export DOCKER_HUB_USERNAME='${{secrets.DOCKER_HUB_USERNAME}}' && export DOCKER_HUB_TOKEN='${{secrets.DOCKER_HUB_TOKEN}}' && chmod a+x refonteai_test.sh && ./refonteai_test.sh "
+                # # This gcloud ssh command is to create docker containers for refonte AI project
+                # cloudg compute ssh "$New_VM" --zone "us-central1-c" --tunnel-through-iap --project "primeval-mark-378114" --command="gcloud storage cp gs://deploy-file/frontend-script/refonteai_test.sh . && export DOCKER_HUB_USERNAME='${{secrets.DOCKER_HUB_USERNAME}}' && export DOCKER_HUB_TOKEN='${{secrets.DOCKER_HUB_TOKEN}}' && chmod a+x refonteai_test.sh && ./refonteai_test.sh "
+
+                # Ou Executer l'unique command "gcloud ssh"  ci-desous qui permet d'executer simultanement les 3 commandes "gcloud ssh" ci-dessus
+                gcloud compute ssh "$New_VM" --zone "us-central1-c" --tunnel-through-iap --project "primeval-mark-378114" --command="gcloud storage cp gs://deploy-file/frontend-script/bash_test.sh . && gcloud storage cp gs://deploy-file/frontend-script/refontetech_test.sh . && gcloud storage cp gs://deploy-file/frontend-script/refonteai_test.sh . && export DOCKER_HUB_USERNAME='${{secrets.DOCKER_HUB_USERNAME}}' && export DOCKER_HUB_TOKEN='${{secrets.DOCKER_HUB_TOKEN}}' && chmod a+x *.sh && ./bash_test.sh && ./refontetech_test.sh && ./refonteai_test.sh"
