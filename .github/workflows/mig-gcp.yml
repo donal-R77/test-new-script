@@ -105,6 +105,7 @@ jobs:
                    gcloud beta compute instance-groups managed create instance-group-tp --template=projects/primeval-mark-378114/regions/us-central1/instanceTemplates/template-be-${{needs.build-image.outputs.git-current-commit}} --size=1 --zone=us-central1-c
                    gcloud beta compute instance-groups set-named-ports instance-group-tp  --named-ports frontend:5000 --zone us-central1-c
                 fi
-
-             
-                
+                sleep 60
+                NB_VM=$(gcloud compute instances list --project=primeval-mark-378114 --format="value(name)" | wc -l)
+                echo $NB_VM
+              
