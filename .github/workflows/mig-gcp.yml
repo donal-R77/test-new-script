@@ -107,7 +107,7 @@ jobs:
                 fi
 
                 NB_VM=$(gcloud compute instances list --project=primeval-mark-378114 --format="value(name)" | wc -l)
-                sleep 300
+                
                 if [ $NB_VM >= 2 ] ;then  
                               New_VM=$(gcloud compute instances list --project=primeval-mark-378114 --format="json" | jq -r 'sort_by(.creationTimestamp) | last | .name')
                               echo $NB_VM  
