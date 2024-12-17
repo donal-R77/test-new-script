@@ -108,4 +108,12 @@ jobs:
                 sleep 60
                 NB_VM=$(gcloud compute instances list --project=primeval-mark-378114 --format="value(name)" | wc -l)
                 echo $NB_VM
-              
+                if [ $NB_VM > 1 ] ;then  
+                              New_VM=$(gcloud compute instances list --project=primeval-mark-378114 --format="json" | jq -r 'sort_by(.creationTimestamp) | last | .name')
+                              echo $NB_VM  
+                              echo $New_VM
+                              sleep 60
+                else echo "new server is not created"
+                fi
+
+                gcloud compute ssh "$New_VM" --zone "us-central1-c" --tunnel-through-iap --project "primeval-mark-378114" --command="export DOCKER_USERNAME='${{secrets.DOCKER_HUB_USERNAME}}' && export DOCKER_PASSWORD='${{secrets.DOCKER_HUB_TOKEN}}' "  
