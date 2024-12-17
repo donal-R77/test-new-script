@@ -16,12 +16,11 @@ sudo systemctl enable docker
 sudo docker --version
 sudo chown root:docker /var/run/docker.sock
 sudo chmod a+w /var/run/docker.sock
-chmod a+x *.sh
 #pull image
-PORTS="5000:5000"
-CONTAINER_NAME="flex"
-REPOSITORY="maric77/refonte-test"
-IMAGE_NAME="test"
+PORTS="3200:3200"
+CONTAINER_NAME="refonte_tech"
+REPOSITORY="maric77/frontend-refonte-tech"
+IMAGE_NAME="latest"
 
 #login to Docker Hub
 echo "${DOCKER_HUB_TOKEN}" | docker login -u "${DOCKER_HUB_USERNAME}" --password-stdin
