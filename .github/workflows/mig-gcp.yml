@@ -106,14 +106,5 @@ jobs:
                    gcloud beta compute instance-groups set-named-ports instance-group-tp  --named-ports frontend:5000 --zone us-central1-c
                 fi
 
-                NB_VM=$(gcloud compute instances list --project=primeval-mark-378114 --format="value(name)" | wc -l)
+             
                 
-                if [ $NB_VM >= 2 ] ;then  
-                              New_VM=$(gcloud compute instances list --project=primeval-mark-378114 --format="json" | jq -r 'sort_by(.creationTimestamp) | last | .name')
-                              echo $NB_VM  
-                              echo $New_VM
-                              sleep 300
-                else echo "new server is not created"
-                fi
-
-                gcloud compute ssh "$New_VM" --zone "us-central1-c" --tunnel-through-iap --project "primeval-mark-378114" --command="export DOCKER_USERNAME='${{secrets.DOCKER_HUB_USERNAME}}' && export DOCKER_PASSWORD='${{secrets.DOCKER_HUB_TOKEN}}' "  
