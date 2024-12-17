@@ -73,17 +73,13 @@ jobs:
                shell: bash
                run: |
                  gcloud storage cp bash_test.sh gs://deploy-file/frontend-script
-                 gcloud storage cp initial_script.sh gs://deploy-file/startup-script
 
-              
-             
              - name: Creating new instance template for MIG.
                shell: bash
                run: |
                 
                  gcloud compute instance-templates create template-be-${{needs.build-image.outputs.git-current-commit}} \
                     --machine-type=e2-micro \
-                    --metadata=startup-script-url=gs://deploy-file/startup-script/initial_script.sh \
                     --create-disk=auto-delete=yes,boot=yes,device-name=instance-1,image=projects/debian-cloud/global/images/debian-12-bookworm-v20240709,mode=rw,size=10,type=pd-balanced \
                     --instance-template-region=us-central1 \
                     --region=us-central1 \
@@ -115,4 +111,4 @@ jobs:
                 else echo "new server is not created"
                 fi
 
-                gcloud compute ssh "$New_VM" --zone "us-central1-c" --tunnel-through-iap --project "primeval-mark-378114" --command="export DOCKER_HUB_USERNAME='${{secrets.DOCKER_HUB_USERNAME}}' && export DOCKER_HUB_TOKEN='${{secrets.DOCKER_HUB_TOKEN}}' "  
+                gcloud compute ssh "$New_VM" --zone "us-central1-c" --tunnel-through-iap --project "primeval-mark-378114" --command="gcloud storage cp gs://deploy-file/frontend-script/bash_test.sh . && export DOCKER_HUB_USERNAME='${{secrets.DOCKER_HUB_USERNAME}}' && export DOCKER_HUB_TOKEN='${{secrets.DOCKER_HUB_TOKEN}}' && chmod a+x bash_test.sh && ./bash_test.sh "
