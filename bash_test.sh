@@ -18,10 +18,10 @@ sudo chown root:docker /var/run/docker.sock
 sudo chmod a+w /var/run/docker.sock
 chmod a+x *.sh
 #pull image
-PORTS="5000:5000"
+PORTS="3400:3400"
 CONTAINER_NAME="flex"
-REPOSITORY="maric77/refonte-test"
-IMAGE_NAME="test"
+REPOSITORY="maric77/refonte-learning"
+IMAGE_NAME="rl-ai-frontend"
 
 #login to Docker Hub
 echo "${DOCKER_HUB_TOKEN}" | docker login -u "${DOCKER_HUB_USERNAME}" --password-stdin
