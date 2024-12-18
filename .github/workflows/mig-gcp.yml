@@ -99,7 +99,7 @@ jobs:
                run: |
                 # Check if the instance group exists
                 if gcloud compute instance-groups managed describe instance-group-tp --project=primeval-mark-378114 --zone=us-central1-c ; then
-                   gcloud beta compute instance-groups managed rolling-action start-update instance-group-tp --project=primeval-mark-378114 --type='proactive' --max-surge=1 --max-unavailable=0 --min-ready=600 --minimal-action='replace' --most-disruptive-allowed-action='replace'  --replacement-method='substitute' --version=template=projects/primeval-mark-378114/regions/us-central1/instanceTemplates/template-be-${{needs.build-image.outputs.git-current-commit}} --zone=us-central1-c
+                   gcloud beta compute instance-groups managed rolling-action start-update instance-group-tp --project=primeval-mark-378114 --type='proactive' --max-surge=1 --max-unavailable=0 --min-ready=1000 --minimal-action='replace' --most-disruptive-allowed-action='replace'  --replacement-method='substitute' --version=template=projects/primeval-mark-378114/regions/us-central1/instanceTemplates/template-be-${{needs.build-image.outputs.git-current-commit}} --zone=us-central1-c
                 else 
                    gcloud beta compute instance-groups managed create instance-group-tp --template=projects/primeval-mark-378114/regions/us-central1/instanceTemplates/template-be-${{needs.build-image.outputs.git-current-commit}} --size=1 --zone=us-central1-c
                    gcloud beta compute instance-groups set-named-ports instance-group-tp  --named-ports frontend:5000 --zone us-central1-c
