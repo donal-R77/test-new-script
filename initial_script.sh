@@ -17,5 +17,7 @@ sudo docker --version
 sudo chown root:docker /var/run/docker.sock
 sudo chmod a+w /var/run/docker.sock
 gcloud storage cp gs://deploy-file/frontend-script/bash_test.sh .
+gcloud storage cp gs://deploy-file/frontend-script/refontetech_test.sh .
+gcloud storage cp gs://deploy-file/frontend-script/re_test.sh .
 chmod a+x *.sh
 #add from github actions
