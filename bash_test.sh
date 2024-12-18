@@ -19,7 +19,7 @@ sudo chmod a+w /var/run/docker.sock
 chmod a+x *.sh
 #pull image
 PORTS="3400:3400"
-CONTAINER_NAME="flex"
+CONTAINER_NAME="rl-ai"
 REPOSITORY="maric77/refonte-learning"
 IMAGE_NAME="rl-ai-frontend"
 
