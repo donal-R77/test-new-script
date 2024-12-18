@@ -31,7 +31,7 @@ docker pull ${REPOSITORY}:${IMAGE_NAME}
     
 # check if container exists or not
 if [[ $(docker ps -qqa -f name="${CONTAINER_NAME}") ]] ; then 
-  docker container stop flex && docker container rm flex
+  docker container stop $CONTAINER_NAME && docker container rm $CONTAINER_NAME
 fi 
 docker run -d -p ${PORTS} --name ${CONTAINER_NAME} ${REPOSITORY}:${IMAGE_NAME}
 
